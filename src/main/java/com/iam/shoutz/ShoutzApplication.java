@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ShoutzApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ShoutzApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(ShoutzApplication.class, args);
+	}
 
 }
