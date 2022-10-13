@@ -32,5 +32,11 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFound("User not found"));
     }
 
+    public User createUser(User user){
+        user.setId(++counter);
+        user.setCreatedOn(LocalDate.now());
+        users.add(user);
+        return user;
+    }
 
 }
