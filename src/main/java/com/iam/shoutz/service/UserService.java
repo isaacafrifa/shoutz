@@ -39,4 +39,8 @@ public class UserService {
         return user;
     }
 
+    public void deleteUser(Long id){
+        User foundUser= this.getUserById(id); // catching user not found here :)
+        users.removeIf(user -> user.getId().equals(foundUser.getId()));
+    }
 }

@@ -39,4 +39,12 @@ public record UserController(UserService userService) {
                 .toUri();
         return ResponseEntity.created(location).build();
     }
+
+    @DeleteMapping("/users/{id}")
+    public void deleteOneUser(@PathVariable("id") Long id){
+        log.info("Delete Mapping for single user invoked");
+        userService.deleteUser(id);
+    }
+
+
 }
