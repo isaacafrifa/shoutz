@@ -17,8 +17,10 @@ public class UserService {
     private static List<User> users = new ArrayList<>();
     private static long counter=0L;
     static {
-        users.add(new User(++counter, "adam1", "Adam", "Freeman", LocalDate.now()));
-        users.add(new User(++counter, "chris_manor", "Christopher", "Manor", LocalDate.now()));
+        users.add(new User(++counter, "adam1", "Adam", "Freeman",
+                LocalDate.now().minusYears(20), LocalDate.now()));
+        users.add(new User(++counter, "chris_manor", "Christopher", "Manor",
+                LocalDate.now().minusYears(18), LocalDate.now()));
     }
 
     public List<User> getAllUsers() {

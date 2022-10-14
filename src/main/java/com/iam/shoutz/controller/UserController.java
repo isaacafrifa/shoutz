@@ -2,8 +2,8 @@ package com.iam.shoutz.controller;
 
 import com.iam.shoutz.entity.User;
 import com.iam.shoutz.service.UserService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,7 +29,7 @@ public record UserController(UserService userService) {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> postUser(@RequestBody User dirtyUser){
+    public ResponseEntity<User> postUser(@Valid @RequestBody User dirtyUser){
         User savedUser= userService.createUser(dirtyUser);
         log.info("Post Mapping for user invoked using {}", savedUser.getUsername());
         //add resource location URI as a response header
