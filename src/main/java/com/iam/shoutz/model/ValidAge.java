@@ -8,15 +8,14 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.CONSTRUCTOR;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /*
-This is customized constraint annotation to validate that a provided
-date compared to the present date is above than 18yrs"
+This is customized constraint annotation to validate that the provided
+date compared to the present date is equal or above 18yrs
  */
 @Constraint(validatedBy = ValidAgeValidator.class)
-@Target({ElementType.FIELD, CONSTRUCTOR })
+@Target({ElementType.FIELD })
 @Retention(RUNTIME)
 @Documented
 public @interface ValidAge {
