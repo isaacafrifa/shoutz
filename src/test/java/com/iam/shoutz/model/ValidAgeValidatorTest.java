@@ -80,4 +80,13 @@ class ValidAgeValidatorTest {
         assertTrue(actual);
     }
 
+    @Test
+    @DisplayName("Testing for when another type other than LocalDate is used")
+    public void testWhenInput_IsNotOfType_LocalDate() {
+        // given
+        String birthDate = "1961, 5, 17";
+        assertThrows(IllegalArgumentException.class, () -> {
+            validAgeValidator.isValid(birthDate, constraintValidatorContext);
+        }, "Should throw illegal argument exception");
+    }
 }
