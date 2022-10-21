@@ -1,6 +1,7 @@
 package com.iam.shoutz.entity;
 
 import com.iam.shoutz.model.ValidAge;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -20,12 +21,19 @@ public class User {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull(message = "Username must not be null")
     @Size(min = 5, message = "Username must be more than 5 letters")
     private String username;
+
+    @NotNull(message = "First name must not be null")
     @Size(min = 2, message = "First name must be more than 2 letters")
     private String firstName;
+
+    @NotNull(message = "Surname must not be null")
     @Size(min = 2, message = "Surname must be more than 2 letters")
     private String lastName;
+
     @Past(message = "Enter valid date of birth")
     @ValidAge
     private LocalDate dateOfBirth;
