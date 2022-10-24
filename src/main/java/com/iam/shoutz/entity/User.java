@@ -1,5 +1,6 @@
 package com.iam.shoutz.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.iam.shoutz.model.ValidAge;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -17,6 +18,7 @@ Let's start with a bare-minimum user entity
 @Getter
 @AllArgsConstructor
 @ToString
+@JsonIgnoreProperties("id")
 public class User {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
