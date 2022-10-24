@@ -4,3 +4,4 @@
   - Customized validation annotations 
   - Open API documentation
   - HATEOAS
+  - HAL explorer
