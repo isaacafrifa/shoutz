@@ -35,12 +35,14 @@ public class UserController {
         this.userService = userService;
     }
 
+
     @Operation(summary = "Get all users", description = "", tags = {})
     @GetMapping("/users")
     public List<User> allUsers() {
         log.info("Get Mapping for all users invoked");
         return userService.getAllUsers();
     }
+
 
     @Operation(summary = "Find user by id",
             description = "",
@@ -56,6 +58,7 @@ public class UserController {
         return EntityModel.of(userService.getUserById(id),
                 allUsersLink);
     }
+
 
     @Operation(
             summary = "Create a new user",
@@ -86,6 +89,7 @@ public class UserController {
                 links);
         return ResponseEntity.created(location).body(entityModel);
     }
+
 
     @Operation(summary = "Deletes an existing user"
             , description = ""
