@@ -2,26 +2,30 @@ package com.iam.shoutz.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.iam.shoutz.model.ValidAge;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 /*
 Let's start with a bare-minimum user entity
  */
-//@Entity
-//@Table
-//@EntityListeners(AuditingEntityListener.class) //allow usage of @CreatedDate and @LastModifiedDate
+@Entity
+@Table(name = "user_details")
+@EntityListeners(AuditingEntityListener.class) //allow usage of @CreatedDate and @LastModifiedDate
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @JsonIgnoreProperties("id")
 public class User {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue
     private Long id;
 
     @NotNull(message = "Username must not be null")
@@ -39,7 +43,7 @@ public class User {
     @Past(message = "Enter valid date of birth")
     @ValidAge
     private LocalDate dateOfBirth;
-//    @CreatedDate
+    @CreatedDate
     private LocalDate createdOn;
 
 }
