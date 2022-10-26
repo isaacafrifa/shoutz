@@ -17,7 +17,7 @@ public record UserService (UserRepository userRepository){
 
     public User getUserById(Long id){
         return this.getAllUsers().stream()
-                .filter(user -> user.getId().equals(id))
+                .filter(user -> user.getUserId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFound("User not found"));
     }

@@ -77,11 +77,11 @@ public class UserController {
         // add resource location URI as a response header
         URI location = ServletUriComponentsBuilder.fromCurrentRequest() //get currentURI i.e."/users"
                 .path("/{id}") //append "/id"
-                .buildAndExpand(savedUser.getId()) // replace {id} with user's id
+                .buildAndExpand(savedUser.getUserId()) // replace {id} with user's id
                 .toUri();
         // add hateoas self and all-users links to output
         Links links = Links.of(
-                linkTo(methodOn(this.getClass()).allUsers()).slash(savedUser.getId())
+                linkTo(methodOn(this.getClass()).allUsers()).slash(savedUser.getUserId())
                         .withSelfRel(),
                 linkTo(methodOn(this.getClass()).allUsers())
                         .withRel("all-users"));
