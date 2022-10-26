@@ -25,7 +25,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("api/v1")
 @Slf4j
-
 @Tag(name = "User", description = "the User endpoints") //OpenApi annotation
 public class UserController {
     private final UserService userService;

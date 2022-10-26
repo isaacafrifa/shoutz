@@ -33,7 +33,7 @@ public class Post {
     @LastModifiedDate
     private LocalDate modifiedOn;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
