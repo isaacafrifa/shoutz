@@ -1,5 +1,6 @@
 package com.iam.shoutz.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.iam.shoutz.model.ValidAge;
 import jakarta.persistence.*;
@@ -11,6 +12,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.List;
+
 /*
 Let's start with a bare-minimum user entity
  */
@@ -22,11 +25,11 @@ Let's start with a bare-minimum user entity
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@JsonIgnoreProperties("id")
+@JsonIgnoreProperties("userId")
 public class User {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long userId;
 
     @NotNull(message = "Username must not be null")
     @Size(min = 5, message = "Username must be more than 5 letters")
@@ -45,5 +48,9 @@ public class User {
     private LocalDate dateOfBirth;
     @CreatedDate
     private LocalDate createdOn;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Post> posts;
 
 }
