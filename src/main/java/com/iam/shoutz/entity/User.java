@@ -49,7 +49,7 @@ public class User {
     @CreatedDate
     private LocalDate createdOn;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Post> posts;
 
