@@ -2,7 +2,6 @@ package com.iam.shoutz.service;
 
 import com.iam.shoutz.entity.User;
 import com.iam.shoutz.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +10,6 @@ import java.time.Month;
 import java.util.Arrays;
 
 @Component
-@Slf4j
 public record DBLoader(UserRepository userRepository) implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
