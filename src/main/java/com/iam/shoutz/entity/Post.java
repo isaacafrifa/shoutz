@@ -2,7 +2,7 @@ package com.iam.shoutz.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -23,7 +23,7 @@ public class Post {
     @GeneratedValue
     private Long postId;
 
-    @NotNull(message = "Message cannot be null")
+    @NotBlank(message = "Message cannot be empty")
     @Size(min = 2, max = 140, message = "Message must be between 2 characters and 140 characters")
     private String message;
 
