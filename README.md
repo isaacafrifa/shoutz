@@ -5,3 +5,5 @@
   - Open API documentation
   - HATEOAS
   - HAL explorer
+  - JPA
+  
