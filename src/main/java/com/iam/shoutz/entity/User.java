@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.iam.shoutz.model.ValidAge;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -40,9 +41,11 @@ public class User {
     @Size(min = 2, message = "Surname must be more than 2 letters")
     private String lastName;
 
+    @NotNull
     @Past(message = "Enter valid date of birth")
     @ValidAge
     private LocalDate dateOfBirth;
+
     @CreatedDate
     private LocalDate createdOn;
 

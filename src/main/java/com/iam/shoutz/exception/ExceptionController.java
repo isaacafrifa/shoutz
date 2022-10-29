@@ -25,10 +25,17 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ResourceNotFound.class)
-    public ResponseEntity<ErrorDetails> handleClientNotFoundException(ResourceNotFound ex, WebRequest request) {
+    public ResponseEntity<ErrorDetails> handleUserNotFoundException(ResourceNotFound ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(HttpStatus.NOT_FOUND.value(), ex.getMessage(),
                 request.getDescription(false), LocalDateTime.now());
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ResourceAlreadyExists.class)
+    public ResponseEntity<ErrorDetails> handleUserAlreadyExistsException(ResourceAlreadyExists ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(HttpStatus.CONFLICT.value(), ex.getMessage(),
+                request.getDescription(false) , LocalDateTime.now());
+        return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
