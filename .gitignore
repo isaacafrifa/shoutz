@@ -1,3 +1,6 @@
+### Environment varibles ###
+environment.properties
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
