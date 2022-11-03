@@ -1,4 +1,4 @@
-package com.iam.shoutz.model;
+package com.iam.shoutz.util;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
