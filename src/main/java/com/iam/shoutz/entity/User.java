@@ -2,7 +2,7 @@ package com.iam.shoutz.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.iam.shoutz.model.ValidAge;
+import com.iam.shoutz.util.ValidAge;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,20 +1,19 @@
-package com.iam.shoutz.model;
+package com.iam.shoutz.util;
 
 import jakarta.validation.ConstraintValidatorContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ValidAgeValidatorTest {
-    @Mock
+
     private ConstraintValidatorContext constraintValidatorContext;
-    ValidAgeValidator validAgeValidator;
-    LocalDate birthDate;
+    private ValidAgeValidator validAgeValidator;
+    private LocalDate birthDate;
 
     @BeforeEach
     void setup() {
@@ -22,7 +21,7 @@ class ValidAgeValidatorTest {
     }
 
     @Test
-    public void testCalculateYoungerAge() {
+    public void itShouldTestCalculateYoungerAge() {
         // given
         birthDate = LocalDate.of(2010, 5, 17);
         // when
@@ -38,7 +37,7 @@ class ValidAgeValidatorTest {
 
         @Test
         @DisplayName("Testing for exactly 18 years")
-        public void testCalculateAge_Exactly18() {
+        public void itShouldTestCalculateAge_Exactly18() {
             // given
             birthDate = LocalDate.now().minusYears(18);
             // when
@@ -49,7 +48,7 @@ class ValidAgeValidatorTest {
 
         @Test
         @DisplayName("Testing for 1 day short of 18 years")
-        public void testCalculateAge_Boundary1() {
+        public void itShouldTestCalculateAge_Boundary1() {
             // given
             birthDate = LocalDate.now().minusYears(18).plusDays(1);
             // when
@@ -60,7 +59,7 @@ class ValidAgeValidatorTest {
 
         @Test
         @DisplayName("Testing for 1 day older than 18 years")
-        public void testCalculateAge_Boundary2() {
+        public void itShouldTestCalculateAge_Boundary2() {
             // given
             birthDate = LocalDate.now().minusYears(18).minusDays(1);
             // when
@@ -71,7 +70,7 @@ class ValidAgeValidatorTest {
     }
 
     @Test
-    public void testCalculateOlderAge() {
+    public void itShouldTestCalculateOlderAge() {
         // given
         birthDate = LocalDate.of(1961, 5, 17);
         // when
@@ -82,7 +81,7 @@ class ValidAgeValidatorTest {
 
     @Test
     @DisplayName("Testing for when another type other than LocalDate is used")
-    public void testWhenInput_IsNotOfType_LocalDate() {
+    public void itShouldTestWhenInput_IsNotOfType_LocalDate() {
         // given
         String birthDate = "1961, 5, 17";
         assertThrows(IllegalArgumentException.class, () -> {
