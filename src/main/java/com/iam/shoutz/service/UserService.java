@@ -1,8 +1,10 @@
 package com.iam.shoutz.service;
 
-import com.iam.shoutz.entity.User;
+import com.iam.shoutz.dto.UserRequestDto;
+import com.iam.shoutz.dto.UserResponseDto;
 import com.iam.shoutz.exception.ResourceAlreadyExists;
 import com.iam.shoutz.exception.ResourceNotFound;
+import com.iam.shoutz.mapper.UserMapper;
 import com.iam.shoutz.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,29 +13,35 @@ import java.util.List;
 
 @Service
 @Slf4j
-public record UserService (UserRepository userRepository){
+public record UserService(UserRepository userRepository, UserMapper userMapper) {
 
-    public List<User> getAllUsers() {
-        var allUsers = userRepository.findAll();
-        return allUsers;
+    public List<UserResponseDto> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(userMapper::convertToResponseDto)
+                .toList();
     }
 
-    public User getUserById(Long id){
-        return this.getAllUsers().stream()
-                .filter(user -> user.getUserId().equals(id))
-                .findFirst()
+    public UserResponseDto getUserById(Long id) {
+        return userRepository
+                .findById(id)
+                .map(userMapper::convertToResponseDto)
                 .orElseThrow(() -> new ResourceNotFound("User not found"));
     }
 
-    public User createUser(User user){
-        if (userRepository.existsByUsername(user.getUsername())){
+    public UserResponseDto createUser(UserRequestDto userRequestDto) {
+        if (userRepository.existsByUsername(userRequestDto.username())) {
             throw new ResourceAlreadyExists("User already exists");
         }
-        return userRepository.save(user);
+        var user = userMapper.convertToEntity(userRequestDto);
+        var saved = userRepository.save(user);
+        return userMapper.convertToResponseDto(saved);
     }
 
-    public void deleteUser(Long id){
-        User foundUser= this.getUserById(id); // catching user not found here :)
+    public void deleteUser(Long id) {
+        var foundUser = userRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFound("User not found"));
         userRepository.delete(foundUser);
     }
 }

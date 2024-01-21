@@ -2,13 +2,21 @@ package com.iam.shoutz.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.iam.shoutz.util.ValidAge;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -22,7 +30,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @JsonIgnoreProperties("userId")
 public class User {
     @Id
@@ -41,10 +48,11 @@ public class User {
     @Size(min = 2, message = "Surname must be more than 2 letters")
     private String lastName;
 
-    @NotNull
-    @Past(message = "Enter valid date of birth")
-    @ValidAge
-    private LocalDate dateOfBirth;
+    private String profilePictureUrl;
+
+    @Max(value = 99, message = "Age should not be greater than 99")
+    @Min(value = 18, message = "Age should be greater than 18")
+    private int age;
 
     @CreatedDate
     private LocalDate createdOn;
