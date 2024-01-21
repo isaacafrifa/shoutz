@@ -1,6 +1,7 @@
 package com.iam.shoutz.controller;
 
-import com.iam.shoutz.entity.User;
+import com.iam.shoutz.dto.UserRequestDto;
+import com.iam.shoutz.dto.UserResponseDto;
 import com.iam.shoutz.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,7 +14,13 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Links;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -23,7 +30,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("api/v1/users")
 @Slf4j
 @Tag(name = "User", description = "the User endpoints") //OpenApi annotation
 public class UserController {
@@ -36,8 +43,8 @@ public class UserController {
 
 
     @Operation(summary = "Get all users", description = "", tags = {})
-    @GetMapping("/users")
-    public List<User> allUsers() {
+    @GetMapping
+    public List<UserResponseDto> allUsers() {
         log.info("Get Mapping for all users invoked");
         return userService.getAllUsers();
     }
@@ -49,8 +56,8 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "404", description = "User not found")})
-    @GetMapping("/users/{id}")
-    public EntityModel<User> getOneUser(@PathVariable("id") Long id) {
+    @GetMapping("/{id}")
+    public EntityModel<UserResponseDto> getOneUser(@PathVariable("id") Long id) {
         log.info("Get Mapping for single user invoked");
         Link allUsersLink = linkTo(methodOn(this.getClass()).allUsers())
                 .withRel("all-users");
@@ -69,22 +76,22 @@ public class UserController {
                     @ApiResponse(responseCode = "409", description = "User already created")
             }
     )
-    @PostMapping("/users")
-    public ResponseEntity<Object> postUser(@Valid @RequestBody User dirtyUser) {
-        User savedUser = userService.createUser(dirtyUser);
-        log.info("Post Mapping for user invoked using {}", savedUser.getUsername());
+    @PostMapping
+    public ResponseEntity<Object> postUser(@Valid @RequestBody UserRequestDto dirtyUser) {
+        UserResponseDto savedUserResponseDto = userService.createUser(dirtyUser);
+        log.info("Post Mapping for user invoked using {}", savedUserResponseDto.username());
         // add resource location URI as a response header
         URI location = ServletUriComponentsBuilder.fromCurrentRequest() //get currentURI i.e."/users"
                 .path("/{id}") //append "/id"
-                .buildAndExpand(savedUser.getUserId()) // replace {id} with user's id
+                .buildAndExpand(savedUserResponseDto.userId()) // replace {id} with user's id
                 .toUri();
         // add hateoas self and all-users links to output
         Links links = Links.of(
-                linkTo(methodOn(this.getClass()).allUsers()).slash(savedUser.getUserId())
+                linkTo(methodOn(this.getClass()).allUsers()).slash(savedUserResponseDto.userId())
                         .withSelfRel(),
                 linkTo(methodOn(this.getClass()).allUsers())
                         .withRel("all-users"));
-        EntityModel<User> entityModel = EntityModel.of(savedUser,
+        EntityModel<UserResponseDto> entityModel = EntityModel.of(savedUserResponseDto,
                 links);
         return ResponseEntity.created(location).body(entityModel);
     }
@@ -96,7 +103,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "404", description = "User not found")})
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public void deleteOneUser(@PathVariable("id") Long id) {
         log.info("Delete Mapping for single user invoked");
         userService.deleteUser(id);

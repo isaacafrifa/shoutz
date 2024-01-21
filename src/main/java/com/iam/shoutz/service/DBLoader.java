@@ -7,23 +7,21 @@ import com.iam.shoutz.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.Arrays;
 
 @Component
 public record DBLoader(UserRepository userRepository, PostRepository postRepository) implements CommandLineRunner {
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         init();
     }
 
     public void init() {
-        User user1 = new User(null, "yawmens", "Yaw", "Afrifa",
-                LocalDate.of(1992, Month.OCTOBER, 5), null, null);
-        User user2 = new User(null, "miss_selim", "Selim", "VanLare",
-                LocalDate.of(1992, Month.MARCH, 23), null, null);
+        User user1 = new User(null, "yawmens", "Yaw", "Afrifa", null,
+                30, null, null);
+        User user2 = new User(null, "miss_selim", "Selim", "VanLare",null,
+                35, null, null);
 
         Post post1 = new Post(null, "This is my first post",null, null, user1);
         Post post2 = new Post(null, "This is my second post",null, null, user1);
