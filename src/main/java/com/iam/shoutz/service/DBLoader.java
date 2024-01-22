@@ -1,5 +1,6 @@
 package com.iam.shoutz.service;
 
+import com.iam.shoutz.config.AppConfig;
 import com.iam.shoutz.entity.Post;
 import com.iam.shoutz.entity.User;
 import com.iam.shoutz.repository.PostRepository;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 @Component
-public record DBLoader(UserRepository userRepository, PostRepository postRepository) implements CommandLineRunner {
+public record DBLoader(UserRepository userRepository, PostRepository postRepository, AppConfig appConfig) implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
@@ -18,9 +19,9 @@ public record DBLoader(UserRepository userRepository, PostRepository postReposit
     }
 
     public void init() {
-        User user1 = new User(null, "yawmens", "Yaw", "Afrifa", null,
+         User user1 = new User(null, "yawmens", "Yaw", "Afrifa", appConfig().getDefaultProfileImageUrl(),
                 30, null, null);
-        User user2 = new User(null, "miss_selim", "Selim", "VanLare",null,
+        User user2 = new User(null, "miss_selim", "Selim", "VanLare", appConfig().getDefaultProfileImageUrl(),
                 35, null, null);
 
         Post post1 = new Post(null, "This is my first post",null, null, user1);

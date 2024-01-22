@@ -1,5 +1,6 @@
 package com.iam.shoutz.service;
 
+import com.iam.shoutz.config.AppConfig;
 import com.iam.shoutz.dto.UserRequestDto;
 import com.iam.shoutz.dto.UserResponseDto;
 import com.iam.shoutz.exception.ResourceAlreadyExists;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public record UserService(UserRepository userRepository, UserMapper userMapper) {
+public record UserService(UserRepository userRepository, UserMapper userMapper, AppConfig appConfig) {
 
     public List<UserResponseDto> getAllUsers() {
         return userRepository.findAll()
@@ -34,6 +35,8 @@ public record UserService(UserRepository userRepository, UserMapper userMapper) 
             throw new ResourceAlreadyExists("User already exists");
         }
         var user = userMapper.convertToEntity(userRequestDto);
+        // set default image here
+        user.setProfilePictureUrl(appConfig().getDefaultProfileImageUrl());
         var saved = userRepository.save(user);
         return userMapper.convertToResponseDto(saved);
     }
